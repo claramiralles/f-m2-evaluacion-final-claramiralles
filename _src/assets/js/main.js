@@ -21,6 +21,28 @@ console.log('funciona');
 
 // búsqueda. 
 
+const button = document.querySelector('.button');
+const input = document. querySelector ('.input');
+const lista = document.querySelector ('.lista');
+const carteldelaserie = document.querySelector ('.carteldelaserie');
+const titulodelaserie = document.querySelector ('.titulodelaserie');
+
+console.log (button, input, lista, carteldelaserie, titulodelaserie);
+
+function handlerFunction(){
+  fetch(' http://api.tvmaze.com/search/shows?q=girls')
+    .then(function(response){
+      return response.json();
+    })
+    .then(function(data){
+      console.log(data);
+      document.body.innerHTML = data.result;
+    });
+}
+
+button.addEventListener('click', handlerFunction);
+input.addEventListener ('click', handlerFunction);
+
 // Por cada show contenido en el resultado de búsqueda debemos pintar una tarjeta
 // donde mostramos una imagen de la serie y el título.
 // NOTA: Para pintar la información en la página puedes elegir hacerlo de forma básica con
@@ -99,23 +121,3 @@ console.log('funciona');
 // desde la página principal
 // ¡Al turrón!
 
-const button = document.querySelector('.button');
-const input = document. querySelector ('.input');
-const lista = document.querySelector ('.lista');
-const carteldelaserie = document.querySelector ('.carteldelaserie');
-const titulodelaserie = document.querySelector ('.titulodelaserie');
-
-console.log (button, input, lista, carteldelaserie, titulodelaserie);
-
-function handlerFunction(){
-  fetch(' http://api.tvmaze.com/search/shows?q=girls')
-    .then(function(response){
-      return response.json();
-    })
-    .then(function(data){
-      document.body.innerHTML = data.result;
-    });
-}
-
-button.addEventListener('click', handlerFunction);
-input.addEventListener ('click', handlerFunction);
