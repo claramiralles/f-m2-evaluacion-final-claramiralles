@@ -24,11 +24,14 @@ function handlerFunction(){
       for (let i = 0; i < data.length; i++){
         // console.log(data[i].show.name);
         // console.log(data[i].show.image.medium);
-        
-        if (data[i].show.image === null){
-          lista.innerHTML += (`<li> ${data[i].show.name} </li> <img src='https://via.placeholder.com/210x295/ffffff/666666/?text=TV>'`);
+
+        const image = data[i].show.image;
+        const name = data[i].show.name;
+
+        if (image === null){
+          lista.innerHTML += (`<li> <h2>${name}</h2> <img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"> </li>`);
         } else {
-          lista.innerHTML += (`<li> ${data[i].show.name} </li> <img src=${data[i].show.image.medium}>`);
+          lista.innerHTML += (`<li> <h2>${name}</h2> <img src= '${image.medium}'> </li>`);
         }
       }
     });
