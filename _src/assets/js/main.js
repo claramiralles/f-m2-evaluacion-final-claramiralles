@@ -1,18 +1,18 @@
 'use strict';
 
-console.log('funciona');
+//HTML ELEMENTS IN CONSTANTS
 
-const button = document.querySelector('.button');
-const input = document. querySelector ('.input');
-const lista = document.querySelector ('.lista');
+const buttonEl = document.querySelector('.button');
+const inputEl = document. querySelector('.input');
+const listEl = document.querySelector('.list');
+const titles = [];
 
+// CALL TO THE API
 
-// let arrayResultados = [];
-
-
-function handlerFunction(){
-  let userinput = input.value;
-  lista.innerHTML = '';
+function showpPrintTheData(){
+  event.preventDefault();
+  let userinput = inputEl.value;
+  
   fetch(`http://api.tvmaze.com/search/shows?q=${userinput}`)
     .then(function(response){
       return response.json();
@@ -21,103 +21,53 @@ function handlerFunction(){
       console.log(data);
       console.log('Esta de arriba es la respuesta de data');
 
+      // PRINT THE TITLES AND IMAGES     
+
+      listEl.innerHTML = '';
       for (let i = 0; i < data.length; i++){
         // console.log(data[i].show.name);
         // console.log(data[i].show.image.medium);
 
-        const image = data[i].show.image;
-        const name = data[i].show.name;
+        const Showimage = data[i].show.image;
+        const Showname = data[i].show.name;
+        const Showid = data[i].show.id;
+        console.log(Showid);
 
-        if (image === null){
-          lista.innerHTML += (`<li> <h2>${name}</h2> <img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"> </li>`);
+        if (Showimage === null){
+          listEl.innerHTML += (`<li class='item_li' id='${Showid}'> <h2>${Showname}</h2> <img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"> </li>`);
         } else {
-          lista.innerHTML += (`<li> <h2>${name}</h2> <img src= '${image.medium}'> </li>`);
+          listEl.innerHTML += (`<li class='item_li' id='${Showid}'> <h2>${Showname}</h2> <img class='image_size' src= '${Showimage.medium}'> </li>`);
         }
       }
+      listEl.innerHTML = listEl.innerHTML; selectTheFavourite (); 
     });
 }
 
-button.addEventListener('click', handlerFunction);
+buttonEl.addEventListener('click', showpPrintTheData);
 
+// SAVE IN LOCAL STORAGE
+// ADD FAVOURITE
 
-// localStorage.setItem('film', JSON.stringify(arrayResultados));
-//
-//Ahora mismo se me imprime solo una vez. Quiero que se me imprima tantas veces como elementos hay en el array. Quiero que el bucle recorra todo el array y en cada elemento me de el name y el medium. y que vaya imprimiendo lo que tiene mas lo nuevo que le doy en el siguiente elemento.
+function convertToFavStoreInCache(event){ //Listens if serie clicked (currentTarget) and adds class favourite.  Later it storages it into the cache
+  const serieclicked = event.currentTarget;
+  serieclicked.classList.toggle('favourite');
 
+  const idSeries = document.querySelectorAll ('item_li'); //Saves all the items of the list in an array.
 
-// En lista debe ir el arrray de resultados, que debe recorrerlo para darme de cada uno de los objetos del array su image y su name.
+  console.log (idSeries);
 
+  let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []; //The variable itemsArray gets the items of the list that are in an array. These items were saved in the localStorage two lines below, with the localStorage.setItem. The condition is that if the items are storaged in the browser cache, they should be 
 
-// Por cada show contenido en el resultado de búsqueda debemos pintar una tarjeta
-// donde mostramos una imagen de la serie y el título.
-// NOTA: Para pintar la información en la página puedes elegir hacerlo de forma básica con
-// innerHTML o manipulando de forma avanzada el DOM
+  itemsArray.push(idSeries);//The push method includes in the array created in the local storage the arrray with the id of series that was created before with qsAlll in const idSeries.
 
+  localStorage.setItem('items', JSON.stringify(itemsArray)); //Gets the array of items, converts it into string and saves it in the local storage as 'items'.
+}
 
-// Algunas de las series que obtenemos en los resultados no tienen imagen. En ese caso debemos
-// mostrar una imagen de relleno. Podemos crear una imagen de relleno con el servicio de
-// placeholder.com donde en la propia URL indicamos el tamaño, colores, texto:
-// https://via.placeholder.com/210x295/ffffff/666666/?text=TV
+function selectTheFavourite() { // Function that selects only the items of series that have been clicked. It saves the items into an array and goes through them with a loop that executes in each of them and Eventlistener if the item has been clicked and excutes on that concrete item the function that adds to fav and stores in cache.
+  const showItems = document.querySelectorAll('.item_li'); //storages the series into an array (declared locally, just in this function, not globally)
+  for ( const item of showItems) { // loop that goes through the array listening to which serie has been clicked and if clicked it executes the function that adds the class favourite and stores them into the browser cache
+    item.addEventListener('click', convertToFavStoreInCache);
+  }
+}
 
-
-// 3. Favoritos
-// Una vez aparecen los resultados de búsqueda, podremos indicar cuáles son nuestras series
-// favoritas. Para ello, al hacer clic sobre un resultado el color de fondo y el de fuente se
-// intercambian.
-
-
-// Además, debes crear un listado (array) con las series favoritas que almacenamos en una variable.
-// Este listado lo mostraremos en la parte izquierda de la pantalla, debajo del formulario de búqueda.
-// Para terminar, si volvemos a realizar una nueva búsqueda, los favoritos se irán acumulando en
-// nuestra lista.
-
-
-// 4. Almacenamiento local
-// Vamos a almacenar el listado de favoritos en el localStorage. De esta forma, al recargar la página
-// el listado de favoritos se mantiene.
-
-
-// 5. BONUS: Afinar la maquetación
-// Una vez terminada la parte de interacción, podemos centrarnos en la parte de maquetación donde
-// tenéis libertad para decidir los estilo. En cualquier caso os dejamos una propuesta gráfica.
-
-
-// 6. BONUS: Borrar favoritos
-// Como bonus, os proponemos la opción de borrar favoritos. De esta forma, al hacer clic sobre el
-// icono de la 'x' al lado de los favoritos, podremos borrarlos (de nuestra lista y del localStorage).
-
-
-// Para terminar de rematar nuestra app de series, nos gustaría poder añadir/quitar favorito al hacer
-// clic sobre una serie. Y que, si realizamos una nueva búsqueda y sale una serie que ya es favorita,
-// aparezca ya resaltada en los resultados de búsqueda (con colores de fondo y texto
-// intercambiados).
-
-
-// Y ya sería fantástico si al final de la lista de favoritos tenemos un botón para borrarlos todos.
-
-
-
-// Criterios de evaluación
-// Vamos a listar los criterios de evaluación de este ejercicio. Si no superas al menos el 80% de estos criterios o no has superado algún criterio clave (marcados con *) te pediremos que realices una re‒evaluación 
-
-// JavaScript básico
-// Crear código JavaScript con sintaxis correcta, bien estructurado e indentado*
-// Usar constantes/variables para almacenar información y re‒asignar valores*
-// Usar condicionales para ejecutar acciones distintas en función de una condición
-// Saber trabajar con listados de datos (arrays)*
-// Usar funciones para estructurar el código
-// Saber modificar la información del DOM para añadir contenido dinámico*
-// Saber escuchar eventos del DOM y actuar en consecuencia*
-// AJAX y APIs
-// Crear peticiones con fetch y promesas*
-// Saber trabajar correctamente con la respuesta del servidor*
-// Gestionar información en formato JSON
-// Usar el localStorage para guardar información en el navegador
-// Issues
-// Haber resuelto las issues de la evaluación intermedia
-// Otros criterios a tener en cuenta
-// Usar inglés para nombres de variables, funciones, clases, mensajes de commit, nombres de ficheros
-// El repositorio de GitHub debe tener README y un enlace a la web en GitHub Pages accesible desde la página principal
-
-// ¡Al turrón!
 
