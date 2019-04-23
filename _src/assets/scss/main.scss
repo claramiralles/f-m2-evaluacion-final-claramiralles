@@ -45,3 +45,15 @@
 .item_li {
 	list-style: none;
 }
+.fav_li {
+	list-style: none;
+}
+.container4 {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	margin: 40px 0px;
+}
+.title_fav {
+	height: 40px;
+}

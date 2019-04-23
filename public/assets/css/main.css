@@ -68,4 +68,26 @@
   list-style: none;
 }
 
+.fav_li {
+  list-style: none;
+}
+
+.container4 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: start;
+  margin: 40px 0px;
+}
+
+.title_fav {
+  height: 40px;
+}
+
 /*# sourceMappingURL=main.css.map */
