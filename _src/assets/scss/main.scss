@@ -1,13 +1,47 @@
 @import 'core/settings';
 
-body {
+.body {
 	margin: 0%;
 	padding: 0;
 	background-color: black;
-	color: #DE3163;;
+	color: #DE3163;
 }
 
-.favourite{
+.favourite {
 	background-color: #DE3163;
 	color: black;
+}
+
+.container3 {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin: 20px 0px;
+}
+
+.container1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 20px 0px;
+}
+
+.container2 {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 20px 0px;
+}
+
+.title1 {
+	display: flex;
+	justify-content: center;
+}
+
+.input {
+	margin-right: 10px;
+} 
+
+.item_li {
+	list-style: none;
 }

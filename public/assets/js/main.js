@@ -5,7 +5,6 @@
 const buttonEl = document.querySelector('.button');
 const inputEl = document. querySelector('.input');
 const listEl = document.querySelector('.list');
-const titles = [];
 
 // CALL TO THE API
 
@@ -34,9 +33,9 @@ function showpPrintTheData(){
         console.log(Showid);
 
         if (Showimage === null){
-          listEl.innerHTML += (`<li class='item_li' id='${Showid}'> <h2>${Showname}</h2> <img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"> </li>`);
+          listEl.innerHTML += (`<li class='item_li' id='${Showid}'> <h3>${Showname}</h3> <img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"> </li>`);
         } else {
-          listEl.innerHTML += (`<li class='item_li' id='${Showid}'> <h2>${Showname}</h2> <img class='image_size' src= '${Showimage.medium}'> </li>`);
+          listEl.innerHTML += (`<li class='item_li' id='${Showid}'> <h3>${Showname}</h3> <img class='image_size' src= '${Showimage.medium}'> </li>`);
         }
       }
       listEl.innerHTML = listEl.innerHTML; selectTheFavourite (); 
