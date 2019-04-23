@@ -12,6 +12,7 @@ const lista = document.querySelector ('.lista');
 
 function handlerFunction(){
   let userinput = input.value;
+  lista.innerHTML = '';
   fetch(`http://api.tvmaze.com/search/shows?q=${userinput}`)
     .then(function(response){
       return response.json();
