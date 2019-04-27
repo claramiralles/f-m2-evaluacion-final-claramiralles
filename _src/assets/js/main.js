@@ -30,15 +30,30 @@ function showpPrintTheData(){
         // console.log(data[i].show.name);
         // console.log(data[i].show.image.medium);
 
-        const Showimage = data[i].show.image;
-        const Showname = data[i].show.name;
-        const Showid = data[i].show.id;
+        const showImageMedium = data[i].show.image.medium;
+        const showName = data[i].show.name;
+        const showId = data[i].show.id;
         // console.log(Showid);
 
-        if (Showimage === null){
-          listEl.innerHTML += (`<li class='item_li' id='${Showid}'> <h3>${Showname}</h3> <img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"> </li>`);
-        } else {
-          listEl.innerHTML += (`<li class='item_li' id='${Showid}'> <h3>${Showname}</h3> <img src= '${Showimage.medium}'> </li>`);
+        const newLi = document.createElement('li');
+        const newTitle = document.createElement ('h3');
+        const newImg = document.createElement ('img');
+
+        listEl.appendChild (newLi);
+        newLi.appendChild (newTitle);
+        newLi.appendChild (newImg);
+
+        const contentnewTitle = document.createTextNode (showName);
+        const contentnewImg = document.createTextNode (showImageMedium);
+        const contentId = document.createTextNode (showId);
+
+        newTitle.appendChild(contentnewTitle);
+        newImg.appendChild(contentnewImg);
+        newLi.appendChild(contentId);
+
+        newImg.setAttribute('src', showImageMedium);
+        if (showImageMedium === null){
+          newImg.setAttribute('src', 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV');
         }
       }
       listEl.innerHTML = listEl.innerHTML; selectTheFavourite (); //The list gets filled and the function that listens to the series clicked is executed
