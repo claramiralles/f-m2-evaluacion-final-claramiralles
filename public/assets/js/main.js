@@ -7,8 +7,22 @@ const inputEl = document. querySelector('.input');
 const listEl = document.querySelector('.list');
 const listFavEl = document.querySelector('.list_fav');
 //CON LA LINEA SS EL BUTTON SEARCH NO BUSCA
-// const localFavEl = JSON.parse (localStorage.getItem ('favorite')) || []; //Creo la constante para recoger la lista de favoritos y le digo que si tiene guardado en el local storage el item 'favorite' me coja ese y si no tiene nada, que sea un array vacio.
+const localFavEl = JSON.parse(localStorage.getItem ('favorite')) ||[]; //Creo la constante para recoger la lista de favoritos y le digo que si tiene guardado en el local storage el item 'favorite' me coja ese y si no tiene nada, que sea un array vacio.
+console.log(localFavEl);
 
+for (const serie of localFavEl){
+  const liFav = document.createElement('li');
+  const titleFav = document.createElement('h4');
+  const contentTitleFav = document.createTextNode (serie.name);
+  const imgFav = document.createElement('img');
+  imgFav.setAttribute ('src', serie.image);
+
+  listFavEl.appendChild(liFav);
+  liFav.appendChild(titleFav);
+  liFav.appendChild(imgFav);
+  titleFav.appendChild(contentTitleFav);
+
+}
 
 // CALL TO THE API
 
@@ -99,19 +113,19 @@ function showpPrintTheData(){
           titleFav.appendChild(contentNewTitleFav);
         }
         
-        // // SAVE IN LOCAL STORAGE
-        // //Creo un objeto con los datos que he sacado
+        // SAVE IN LOCAL STORAGE
+        //Creo un objeto con los datos que he sacado
 
-        // const localObject = {
-        //   'name': showNameFav,
-        //   'image': showImageFav,
-        //   'id': showIdFav,
-        // };
-        // console.log(localObject);
+        const localObject = {
+          'name': showNameFav,
+          'image': showImageFav,
+          'id': showIdFav,
+        };
+        console.log(localObject);
 
-        // localFavEl.push(localObject); //Al array vacio le añado cada serie como objeto
+        localFavEl.push(localObject); //Al array vacio le añado cada serie como objeto
 
-        // localStorage.setItem ('favorite', JSON.stringify(localFavEl));// Guardo el array de objetos con el nombre 'favorite' con stringify para convertirlo en  cadena, ya que en el local storage no se pude guardar un array, asi que con strinfigy lo guardo en cadena.
+        localStorage.setItem ('favorite', JSON.stringify(localFavEl));// Guardo el array de objetos con el nombre 'favorite' con stringify para convertirlo en  cadena, ya que en el local storage no se pude guardar un array, asi que con strinfigy lo guardo en cadena.
 
       }
     });
@@ -119,7 +133,11 @@ function showpPrintTheData(){
 
 buttonEl.addEventListener('click', showpPrintTheData);
 
+function getdata(){
 
+}
+
+getdata();
 
 
 //# sourceMappingURL=main.js.map
