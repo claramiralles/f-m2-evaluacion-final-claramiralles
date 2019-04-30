@@ -12,6 +12,7 @@ const listFavEl = document.querySelector('.list_fav');
 
 // CALL TO THE API
 
+
 function showpPrintTheData(){
   // event.preventDefault();
   let userinput = inputEl.value;
@@ -29,8 +30,8 @@ function showpPrintTheData(){
 
       for (let i = 0; i < data.length; i++){
         console.log(data);
-        const showImageMedium = data[i].show.image.medium;
-        console.log (showImageMedium);
+        const showImage = data[i].show.image;
+        console.log (showImage);
         const showName = data[i].show.name;
         const showId = data[i].show.id;
         // console.log(Showid);
@@ -46,10 +47,10 @@ function showpPrintTheData(){
         const newImg = document.createElement ('img');
         // const contentnewImg = document.createTextNode (showImageMedium);
 
-        newImg.setAttribute('src', showImageMedium);
-        if (showImageMedium === null){
+        
+        if (showImage === null){
           newImg.setAttribute('src', 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV');
-        }
+        } else {newImg.setAttribute('src', showImage.medium);}
        
         listEl.appendChild (newLi);
         newLi.appendChild (newTitle);
@@ -98,19 +99,19 @@ function showpPrintTheData(){
           titleFav.appendChild(contentNewTitleFav);
         }
         
-        // SAVE IN LOCAL STORAGE
-        //Creo un objeto con los datos que he sacado
+        // // SAVE IN LOCAL STORAGE
+        // //Creo un objeto con los datos que he sacado
 
-        const localObject = {
-          'name': showNameFav,
-          'image': showImageFav,
-          'id': showIdFav,
-        };
-        console.log(localObject);
+        // const localObject = {
+        //   'name': showNameFav,
+        //   'image': showImageFav,
+        //   'id': showIdFav,
+        // };
+        // console.log(localObject);
 
-        localFavEl.push(localObject); //Al array vacio le añado cada serie como objeto
+        // localFavEl.push(localObject); //Al array vacio le añado cada serie como objeto
 
-        localStorage.setItem ('favorite', JSON.stringify(localFavEl));// Guardo el array de objetos con el nombre 'favorite' con stringify para convertirlo en  cadena, ya que en el local storage no se pude guardar un array, asi que con strinfigy lo guardo en cadena.
+        // localStorage.setItem ('favorite', JSON.stringify(localFavEl));// Guardo el array de objetos con el nombre 'favorite' con stringify para convertirlo en  cadena, ya que en el local storage no se pude guardar un array, asi que con strinfigy lo guardo en cadena.
 
       }
     });
