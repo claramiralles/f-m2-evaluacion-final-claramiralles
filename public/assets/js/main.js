@@ -6,14 +6,14 @@ const buttonEl = document.querySelector('.button');
 const inputEl = document. querySelector('.input');
 const listEl = document.querySelector('.list');
 const listFavEl = document.querySelector('.list_fav');
-//CON LA LINEA SS EL BUTTON SEARCH NO BUSCA
+
 const localFavEl = JSON.parse(localStorage.getItem ('favorite')) ||[]; //Creo la constante para recoger la lista de favoritos y le digo que si tiene guardado en el local storage el item 'favorite' me coja ese y si no tiene nada, que sea un array vacio.
 console.log(localFavEl);
 
 for (const serie of localFavEl){
   const liFav = document.createElement('li');
   const titleFav = document.createElement('h4');
-  const contentTitleFav = document.createTextNode (serie.name);
+  const contentTitleFav = document.createTextNode(serie.name);
   const imgFav = document.createElement('img');
   imgFav.setAttribute ('src', serie.image);
 
@@ -21,54 +21,50 @@ for (const serie of localFavEl){
   liFav.appendChild(titleFav);
   liFav.appendChild(imgFav);
   titleFav.appendChild(contentTitleFav);
-
 }
 
 // CALL TO THE API
 
-
 function showpPrintTheData(){
-  // event.preventDefault();
   let userinput = inputEl.value;
-  
   fetch(`http://api.tvmaze.com/search/shows?q=${userinput}`)
     .then(function(response){
       return response.json();
     })
     .then(function(data){ //todo lo que haga lo tengo que hacer dentro de la funcion en el ambito de data, porque todo el tiempo estoy trabajando con la respuesta que me devuelve data que es un array de objetos. Si lo pongo debajo y uso sus datos, me va a decir que no existe.
+
       // PRINT THE TITLES AND IMAGES     
 
-      listEl.innerHTML = ''; //con la lista vacia le digo que con cada busqueda la lista ul se me quede vacia antes de cada nueva busqueda.
-
-      // listFavEl.innerHTML = ''; //No hace falta, porque quiero que se me almacenen constantemente en favoritos, no quiero vaciar el array.
+      listEl.innerHTML = ''; 
+      
+      //con la lista vacia le digo que con cada busqueda la lista ul se me quede vacia antes de cada nueva busqueda.
+      // listFavEl.innerHTML = ''; 
+      //No hace falta, porque quiero que se me almacenen constantemente en favoritos, no quiero vaciar el array.
 
       for (let i = 0; i < data.length; i++){
         console.log(data);
         const showImage = data[i].show.image;
-        console.log (showImage);
         const showName = data[i].show.name;
         const showId = data[i].show.id;
-        // console.log(Showid);
 
         const newLi = document.createElement('li');
         newLi.setAttribute ('class', 'item_list');
         newLi.setAttribute ('id', showId);
         // const contentId = document.createTextNode (showId);
 
-        const newTitle = document.createElement ('h3');
-        const contentnewTitle = document.createTextNode (showName);
+        const newTitle = document.createElement('h3');
+        const contentnewTitle = document.createTextNode(showName);
 
-        const newImg = document.createElement ('img');
+        const newImg = document.createElement('img');
         // const contentnewImg = document.createTextNode (showImageMedium);
-
         
         if (showImage === null){
           newImg.setAttribute('src', 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV');
         } else {newImg.setAttribute('src', showImage.medium);}
        
-        listEl.appendChild (newLi);
-        newLi.appendChild (newTitle);
-        newLi.appendChild (newImg);
+        listEl.appendChild(newLi);
+        newLi.appendChild(newTitle);
+        newLi.appendChild(newImg);
 
         newTitle.appendChild(contentnewTitle);
       }
@@ -93,7 +89,7 @@ function showpPrintTheData(){
         console.log(showImageFav);
 
         const showNameFav = clicked.outerText;
-        console.log (showNameFav);
+        console.log(showNameFav);
 
         const showIdFav = clicked.id;
 
@@ -105,6 +101,7 @@ function showpPrintTheData(){
             imgFav.setAttribute('src', 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV');
           }
           const titleFav = document.createElement ('h4');
+          titleFav.setAttribute ('class', 'item_list');
           const contentNewTitleFav = document.createTextNode (showNameFav);
         
           listFavEl.appendChild(itemFav);
@@ -121,6 +118,7 @@ function showpPrintTheData(){
           'image': showImageFav,
           'id': showIdFav,
         };
+        
         console.log(localObject);
 
         localFavEl.push(localObject); //Al array vacio le añado cada serie como objeto
