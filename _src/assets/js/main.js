@@ -95,13 +95,13 @@ function showpPrintTheData(){
 
         if (clicked.classList.contains('favorite')){
           const itemFav = document.createElement ('li');
+          itemFav.setAttribute ('class', 'item_list');
           const imgFav = document.createElement ('img');
           imgFav.setAttribute('src', showImageFav);
           if (showImageFav === null){
             imgFav.setAttribute('src', 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV');
           }
           const titleFav = document.createElement ('h4');
-          titleFav.setAttribute ('class', 'item_list');
           const contentNewTitleFav = document.createTextNode (showNameFav);
         
           listFavEl.appendChild(itemFav);
